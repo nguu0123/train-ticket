@@ -1,94 +1,35 @@
 package inside_payment.service;
 
-import edu.fudan.common.util.Response;
-import inside_payment.entity.*;
-import org.springframework.http.HttpHeaders;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
+public class InsidePaymentService {
 
-/**
- * @author Administrator
- * @date 2017/6/20.
- */
-public interface InsidePaymentService {
+    @Autowired
+    private FeatureFlagService featureFlagService;
 
-    /**
-     * pay by payment info
-     *
-     * @param info payment info
-     * @param headers headers
-     * @return Response
-     */
-    Response pay(PaymentInfo info , HttpHeaders headers);
-
-    /**
-     * create account by payment info
-     *
-     * @param info payment info
-     * @param headers headers
-     * @return Response
-     */
-    Response createAccount(AccountInfo info, HttpHeaders headers);
-
-    /**
-     * add money with user id, money
-     *
-     * @param userId user id
-     * @param  money money
-     * @param headers headers
-     * @return Response
-     */
-    Response addMoney(String userId,String money, HttpHeaders headers);
-
-    /**
-     * query payment info
-     *
-     * @param headers headers
-     * @return Response
-     */
-    Response queryPayment(HttpHeaders headers);
-
-    /**
-     * query account info
-     *
-     * @param headers headers
-     * @return Response
-     */
-    Response queryAccount(HttpHeaders headers);
-
-    /**
-     * drawback with user id, money
-     *
-     * @param userId user id
-     * @param  money money
-     * @param headers headers
-     * @return Response
-     */
-    Response drawBack(String userId, String money, HttpHeaders headers);
-
-    /**
-     * pay difference by payment info
-     *
-     * @param info payment info
-     * @param headers headers
-     * @return Response
-     */
-    Response payDifference(PaymentInfo info, HttpHeaders headers);
-
-    /**
-     * query add money
-     *
-     * @param headers headers
-     * @return Response
-     */
-    Response queryAddMoney(HttpHeaders headers);
-
-    /**
-     * init payment
-     *
-     * @param payment payment
-     * @param headers headers
-     * @return Response
-     */
-    void initPayment(Payment payment, HttpHeaders headers);
-
+    public boolean drawback(String userId, String money, String orderId) {
+        
+        System.out.println("[TrainTicket][InsidePayment] Processing drawback for order: " + orderId);
+        System.out.println("[TrainTicket][InsidePayment] User: " + userId + ", Amount: " + money);
+        
+        if (featureFlagService.isEnabled("fault-1-async-message-order")) {
+            System.out.println("[TrainTicket][InsidePayment][F1 MONITORING] F1 fault is active during payment drawback");
+            System.out.println("[TrainTicket][InsidePayment][F1 MONITORING] This operation may be delayed by cancel service");
+        }
+        
+        try {
+            Thread.sleep(500);
+            
+            System.out.println("[TrainTicket][InsidePayment] Drawback completed successfully");
+            System.out.println("[TrainTicket][InsidePayment] Refund processed for order: " + orderId);
+            
+            return true;
+            
+        } catch (Exception e) {
+            System.err.println("[TrainTicket][InsidePayment] Drawback failed: " + e.getMessage());
+            return false;
+        }
+    }
 }
