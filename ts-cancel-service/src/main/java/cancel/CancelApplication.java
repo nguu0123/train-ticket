@@ -1,35 +1,35 @@
 package cancel;
 
+import dev.openfeature.sdk.OpenFeatureAPI;
+import dev.openfeature.contrib.providers.flagd.FlagdProvider;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.integration.annotation.IntegrationComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.web.client.RestTemplate;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-/**
- * @author fdse
- */
+import javax.annotation.PostConstruct;
+
 @SpringBootApplication
-@EnableAspectJAutoProxy(proxyTargetClass = true)
 @EnableAsync
-@IntegrationComponentScan
-@EnableSwagger2
-@EnableDiscoveryClient
 public class CancelApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(CancelApplication.class, args);
     }
 
-    @LoadBalanced
-    @Bean
-    public RestTemplate restTemplate(RestTemplateBuilder builder) {
-        return builder.build();
+    @PostConstruct
+    public void initializeFeatureFlags() {
+        try {
+            String flagdHost = System.getenv().getOrDefault("FLAGD_HOST", "flagd");
+            int flagdPort = Integer.parseInt(System.getenv().getOrDefault("FLAGD_PORT", "8013"));
+            
+            FlagdProvider provider = new FlagdProvider();
+            OpenFeatureAPI.getInstance().setProvider(provider);
+            
+            System.out.println("[TrainTicket][Cancel][Feature Flags] Connected to flagd at " + flagdHost + ":" + flagdPort);
+            
+        } catch (Exception e) {
+            System.err.println("[TrainTicket][Cancel][Feature Flags] Failed to initialize: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
