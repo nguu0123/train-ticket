@@ -9,7 +9,8 @@ spec:
       serviceAccountName: train-ticket-deploy-sa
       containers:
         - name: train-ticket-deploy
-          image: jacksonarthurclark/train-ticket-deploy:latest
+          # image: jacksonarthurclark/train-ticket-deploy:latest
+          image: saad1038/train-ticket-deploy:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NAMESPACE

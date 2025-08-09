@@ -6,7 +6,7 @@ metadata:
 data:
   flags.yaml: |
     flags:
-      fault-1-async-message-order:
+      fault-1-async-message-sequence-control:
         state: ENABLED
         variants:
           "on": true
@@ -20,147 +20,147 @@ data:
               - var: "enabled"
           then: "on"
       
-      fault-2-cpu-occupancy:
+      fault-2-data-request-order-inconsistency:
         state: ENABLED
         variants:
           "on": true
           "off": false
         defaultVariant: "off"
       
-      fault-3-memory-leak:
+      fault-3-jvm-docker-config-mismatch:
         state: ENABLED
         variants:
           "on": true
           "off": false
         defaultVariant: "off"
       
-      fault-4-connection-pool-exhaustion:
+      fault-4-ssl-offloading-granularity:
         state: ENABLED
         variants:
           "on": true
           "off": false
         defaultVariant: "off"
       
-      fault-5-network-partition:
+      fault-5-high-load-timeout-cascade:
         state: ENABLED
         variants:
           "on": true
           "off": false
         defaultVariant: "off"
       
-      fault-6-disk-space-full:
+      fault-6-sql-error-recursive-requests:
         state: ENABLED
         variants:
           "on": true
           "off": false
         defaultVariant: "off"
       
-      fault-7-service-unavailable:
+      fault-7-third-party-service-overload:
         state: ENABLED
         variants:
           "on": true
           "off": false
         defaultVariant: "off"
       
-      fault-8-database-lock-timeout:
+      fault-8-request-key-propagation-failure:
         state: ENABLED
         variants:
           "on": true
           "off": false
         defaultVariant: "off"
       
-      fault-9-message-queue-overflow:
+      fault-9-css-bidirectional-display-error:
         state: ENABLED
         variants:
           "on": true
           "off": false
         defaultVariant: "off"
       
-      fault-10-slow-database-query:
+      fault-10-bom-api-unexpected-output:
         state: ENABLED
         variants:
           "on": true
           "off": false
         defaultVariant: "off"
       
-      fault-11-configuration-error:
+      fault-11-bom-data-sequence-error:
         state: ENABLED
         variants:
           "on": true
           "off": false
         defaultVariant: "off"
       
-      fault-12-authentication-failure:
+      fault-12-price-status-query-chain-error:
         state: ENABLED
         variants:
           "on": true
           "off": false
         defaultVariant: "off"
       
-      fault-13-cache-miss-storm:
+      fault-13-price-optimization-order-error:
         state: ENABLED
         variants:
           "on": true
           "off": false
         defaultVariant: "off"
       
-      fault-14-http-timeout:
+      fault-14-locked-product-cpi-calculation-error:
         state: ENABLED
         variants:
           "on": true
           "off": false
         defaultVariant: "off"
       
-      fault-15-data-inconsistency:
+      fault-15-spark-actor-system-config-error:
         state: ENABLED
         variants:
           "on": true
           "off": false
         defaultVariant: "off"
       
-      fault-16-service-discovery-failure:
+      fault-16-spray-max-content-length-limit:
         state: ENABLED
         variants:
           "on": true
           "off": false
         defaultVariant: "off"
       
-      fault-17-load-balancer-failure:
+      fault-17-nested-sql-select-clause-error:
         state: ENABLED
         variants:
           "on": true
           "off": false
         defaultVariant: "off"
       
-      fault-18-session-timeout:
+      fault-18-json-chart-data-null-value:
         state: ENABLED
         variants:
           "on": true
           "off": false
         defaultVariant: "off"
       
-      fault-19-payment-gateway-error:
+      fault-19-product-price-french-format-error:
         state: ENABLED
         variants:
           "on": true
           "off": false
         defaultVariant: "off"
       
-      fault-20-email-service-failure:
+      fault-20-jboss-db2-jar-classpath-error:
         state: ENABLED
         variants:
           "on": true
           "off": false
         defaultVariant: "off"
       
-      fault-21-file-upload-failure:
+      fault-21-aria-labeled-accessibility-error:
         state: ENABLED
         variants:
           "on": true
           "off": false
         defaultVariant: "off"
       
-      fault-22-monitoring-system-failure:
+      fault-22-sql-column-name-mismatch-error:
         state: ENABLED
         variants:
           "on": true
