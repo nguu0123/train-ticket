@@ -12,7 +12,7 @@ spec:
       containers:
       - name: ts-admin-basic-info-service
         image: 10.141.211.160:5000/master/cluster-ts-admin-basic-info-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 18767
 ---
@@ -32,7 +32,7 @@ spec:
       containers:
       - name: ts-admin-order-service
         image: 10.141.211.160:5000/master/cluster-ts-admin-order-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 16112
 
@@ -52,7 +52,7 @@ spec:
       containers:
       - name: ts-admin-route-service
         image: 10.141.211.160:5000/master/cluster-ts-admin-route-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 16113
 
@@ -72,7 +72,7 @@ spec:
       containers:
       - name: ts-admin-travel-service
         image: 10.141.211.160:5000/master/cluster-ts-admin-travel-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 16114
 
@@ -92,7 +92,7 @@ spec:
       containers:
       - name: ts-admin-user-service
         image: 10.141.211.160:5000/master/cluster-ts-admin-user-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 16115
 
@@ -112,7 +112,7 @@ spec:
       containers:
       - name: ts-assurance-service
         image: 10.141.211.160:5000/master/cluster-ts-assurance-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 18888
 
@@ -132,7 +132,7 @@ spec:
       containers:
       - name: ts-basic-service
         image: 10.141.211.160:5000/master/cluster-ts-basic-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 15680
 
@@ -152,7 +152,7 @@ spec:
       containers:
       - name: ts-cancel-service
         image: 10.141.211.160:5000/master/cluster-ts-cancel-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 18885
 
@@ -172,7 +172,7 @@ spec:
       containers:
       - name: ts-config-service
         image: 10.141.211.160:5000/master/cluster-ts-config-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 15679
 
@@ -192,7 +192,7 @@ spec:
       containers:
       - name: ts-consign-price-service
         image: 10.141.211.160:5000/master/cluster-ts-consign-price-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 16110
 
@@ -212,7 +212,7 @@ spec:
       containers:
       - name: ts-consign-service
         image: 10.141.211.160:5000/master/cluster-ts-consign-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 16111
 
@@ -232,7 +232,7 @@ spec:
       containers:
       - name: ts-contacts-service
         image: 10.141.211.160:5000/master/cluster-ts-contacts-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 12347
 
@@ -252,7 +252,7 @@ spec:
       containers:
       - name: ts-execute-service
         image: 10.141.211.160:5000/master/cluster-ts-execute-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 12386
 
@@ -272,7 +272,7 @@ spec:
       containers:
       - name: ts-food-map-service
         image: 10.141.211.160:5000/master/cluster-ts-food-map-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 18855
 
@@ -292,7 +292,7 @@ spec:
       containers:
       - name: ts-food-service
         image: 10.141.211.160:5000/master/cluster-ts-food-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 18856
 
@@ -312,7 +312,7 @@ spec:
       containers:
       - name: ts-inside-payment-service
         image: 10.141.211.160:5000/master/cluster-ts-inside-payment-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 18673
 
@@ -332,7 +332,7 @@ spec:
       containers:
       - name: ts-login-service
         image: 10.141.211.160:5000/master/cluster-ts-login-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 12342
 
@@ -352,7 +352,7 @@ spec:
       containers:
       - name: ts-news-service
         image: 10.141.211.160:5000/master/cluster-ts-news-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 12862
 
@@ -372,7 +372,7 @@ spec:
       containers:
       - name: ts-notification-service
         image: 10.141.211.160:5000/master/cluster-ts-notification-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 17853
 
@@ -392,7 +392,7 @@ spec:
       containers:
       - name: ts-order-other-service
         image: 10.141.211.160:5000/master/cluster-ts-order-other-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 12032
 
@@ -412,7 +412,7 @@ spec:
       containers:
       - name: ts-order-service
         image: 10.141.211.160:5000/master/cluster-ts-order-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 12031
 
@@ -432,7 +432,7 @@ spec:
       containers:
       - name: ts-payment-service
         image: 10.141.211.160:5000/master/cluster-ts-payment-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 19001
 
@@ -452,7 +452,7 @@ spec:
       containers:
       - name: ts-preserve-other-service
         image: 10.141.211.160:5000/master/cluster-ts-preserve-other-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 14569
 
@@ -472,7 +472,7 @@ spec:
       containers:
       - name: ts-preserve-service
         image: 10.141.211.160:5000/master/cluster-ts-preserve-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 14568
 
@@ -492,7 +492,7 @@ spec:
       containers:
       - name: ts-price-service
         image: 10.141.211.160:5000/master/cluster-ts-price-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 16579
 
@@ -512,7 +512,7 @@ spec:
       containers:
       - name: ts-rebook-service
         image: 10.141.211.160:5000/master/cluster-ts-rebook-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 18886
 
@@ -532,7 +532,7 @@ spec:
       containers:
       - name: ts-register-service
         image: 10.141.211.160:5000/master/cluster-ts-register-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 12344
 
@@ -552,7 +552,7 @@ spec:
       containers:
       - name: ts-route-plan-service
         image: 10.141.211.160:5000/master/cluster-ts-route-plan-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 14578
 
@@ -572,7 +572,7 @@ spec:
       containers:
       - name: ts-route-service
         image: 10.141.211.160:5000/master/cluster-ts-route-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 11178
 
@@ -592,7 +592,7 @@ spec:
       containers:
       - name: ts-seat-service
         image: 10.141.211.160:5000/master/cluster-ts-seat-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 18898
 
@@ -612,7 +612,7 @@ spec:
       containers:
       - name: ts-security-service
         image: 10.141.211.160:5000/master/cluster-ts-security-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 11188
 
@@ -632,7 +632,7 @@ spec:
       containers:
       - name: ts-sso-service
         image: 10.141.211.160:5000/master/cluster-ts-sso-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 12349
 
@@ -652,7 +652,7 @@ spec:
       containers:
       - name: ts-station-service
         image: 10.141.211.160:5000/master/cluster-ts-station-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 12345
 
@@ -672,7 +672,7 @@ spec:
       containers:
       - name: ts-ticket-office-service
         image: 10.141.211.160:5000/master/cluster-ts-ticket-office-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 16108
 
@@ -692,7 +692,7 @@ spec:
       containers:
       - name: ts-ticketinfo-service
         image: 10.141.211.160:5000/master/cluster-ts-ticketinfo-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 15681
 
@@ -712,7 +712,7 @@ spec:
       containers:
       - name: ts-train-service
         image: 10.141.211.160:5000/master/cluster-ts-train-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 14567
 
@@ -732,7 +732,7 @@ spec:
       containers:
       - name: ts-travel2-service
         image: 10.141.211.160:5000/master/cluster-ts-travel2-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 16346
 
@@ -752,7 +752,7 @@ spec:
       containers:
       - name: ts-travel-plan-service
         image: 10.141.211.160:5000/master/cluster-ts-travel-plan-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 14322
 
@@ -772,7 +772,7 @@ spec:
       containers:
       - name: ts-travel-service
         image: 10.141.211.160:5000/master/cluster-ts-travel-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 12346
 
@@ -792,7 +792,7 @@ spec:
       containers:
       - name: ts-verification-code-service
         image: 10.141.211.160:5000/master/cluster-ts-verification-code-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 15678
 
@@ -812,7 +812,7 @@ spec:
       containers:
       - name: ts-voucher-service
         image: 10.141.211.160:5000/master/cluster-ts-voucher-service
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 16101
 

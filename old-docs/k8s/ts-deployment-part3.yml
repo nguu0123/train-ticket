@@ -12,7 +12,7 @@ spec:
       containers:
       - name: ts-ui-dashboard
         image: 10.141.211.160:5000/master/cluster-ts-ui-dashboard
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
 

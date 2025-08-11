@@ -13,6 +13,6 @@ spec:
       containers:
       - name: ts-voucher-service-v2
         image: kylinxiang/ts-voucher-service:f1.1
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 16101
