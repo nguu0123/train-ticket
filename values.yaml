@@ -1,4 +1,5 @@
 namespace: train-ticket
 job:
-  image: jacksonarthurclark/train-ticket-deploy:latest
+  # image: jacksonarthurclark/train-ticket-deploy:latest
+  image: saad1038/train-ticket-deploy:latest
   imagePullPolicy: IfNotPresent

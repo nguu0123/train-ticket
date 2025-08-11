@@ -1886,7 +1886,7 @@ spec:
     spec:
       containers:
         - name: ts-voucher-service
-          image: codewisdom/ts-voucher-service:1.0.0
+          image: saad1038/ts-voucher-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP

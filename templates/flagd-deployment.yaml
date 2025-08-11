@@ -46,19 +46,21 @@ spec:
       serviceAccountName: flagd
       containers:
       - name: flagd
-        image: ghcr.io/open-feature/flagd:v0.6.7
+        image: ghcr.io/open-feature/flagd:v0.11.1
         ports:
         - containerPort: 8013
-          name: grpc
+          name: rpc
         - containerPort: 8016
-          name: http
+          name: ofrep
+        - containerPort: 8014
+          name: mgmt
         args:
         - start
         - --uri
         - file:./etc/flagd/flags.yaml
         - --port
         - "8013"
-        - --metrics-port
+        - --ofrep-port
         - "8016"
         - --cors-origin
         - "*"
@@ -72,13 +74,13 @@ spec:
         livenessProbe:
           httpGet:
             path: /readyz
-            port: 8016
+            port: 8014
           initialDelaySeconds: 10
           periodSeconds: 10
         readinessProbe:
           httpGet:
             path: /readyz
-            port: 8016
+            port: 8014
           initialDelaySeconds: 5
           periodSeconds: 5
       volumes:
@@ -97,11 +99,11 @@ spec:
   selector:
     app: flagd
   ports:
-  - name: grpc
+  - name: rpc
     port: 8013
     targetPort: 8013
     protocol: TCP
-  - name: http
+  - name: ofrep
     port: 8016
     targetPort: 8016
     protocol: TCP
