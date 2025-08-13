@@ -11,7 +11,9 @@ spec:
         - name: train-ticket-deploy
           # image: jacksonarthurclark/train-ticket-deploy:latest
           image: saad1038/train-ticket-deploy:latest
-          imagePullPolicy: IfNotPresent
+          # TODO: change to IfNotPresent after fault implentations are done
+          # imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NAMESPACE
               value: "{{ .Values.namespace }}"
