@@ -14,7 +14,7 @@ public class InsidePaymentService {
         System.out.println("[TrainTicket][InsidePayment] Processing drawback for order: " + orderId);
         System.out.println("[TrainTicket][InsidePayment] User: " + userId + ", Amount: " + money);
         
-        if (featureFlagService.isEnabled("fault-1-async-message-order")) {
+        if (featureFlagService.isEnabled("fault-1-async-message-sequence-control")) {
             System.out.println("[TrainTicket][InsidePayment][F1 MONITORING] F1 fault is active during payment drawback");
             System.out.println("[TrainTicket][InsidePayment][F1 MONITORING] This operation may be delayed by cancel service");
         }
