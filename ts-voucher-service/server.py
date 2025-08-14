@@ -19,6 +19,7 @@ class GetVoucherHandler(tornado.web.RequestHandler):
         orderId = data["orderId"]
         type = data["type"]
 
+        #################################### Fault Injection Code Start ####################################
         # F-17: Too many nested selects -> simulate slow DB by sleeping in MySQL
         try:
             rf17_flag = feature_flag_service.is_enabled("fault-17-nested-sql-select-clause-error")
@@ -29,7 +30,9 @@ class GetVoucherHandler(tornado.web.RequestHandler):
         if rf17_flag:
             print("[TrainTicket][Voucher][F17 ON] Simulating nested SELECT delay (sleeping in DB)...")
             self._simulate_nested_select_delay()
+        #################################### Fault Injection Code End ####################################
 
+        
         #Query for the existence of a corresponding credential based on the order id
         queryVoucher = self.fetchVoucherByOrderId(orderId)
 
@@ -58,7 +61,6 @@ class GetVoucherHandler(tornado.web.RequestHandler):
             self.write(queryVoucher)
 
     def _simulate_nested_select_delay(self):
-        """Simulate F-17: slow DB caused by deeply nested SELECTs via MySQL sleep."""
         try:
             global mysql_config
             conn = pymysql.connect(**mysql_config)
