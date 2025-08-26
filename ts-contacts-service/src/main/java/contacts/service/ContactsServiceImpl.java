@@ -22,6 +22,9 @@ public class ContactsServiceImpl implements ContactsService {
     @Autowired
     private ContactsRepository contactsRepository;
 
+    @Autowired
+    private FeatureFlagService featureFlagService;
+
     String success = "Success";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ContactsServiceImpl.class);
@@ -60,7 +63,32 @@ public class ContactsServiceImpl implements ContactsService {
     @Override
     public Response create(Contacts addContacts, HttpHeaders headers) {
 
-        Contacts c = contactsRepository.findByAccountIdAndDocumentTypeAndDocumentType(addContacts.getAccountId(), addContacts.getDocumentNumber(), addContacts.getDocumentType());
+        // FAULT F22: Conditionally execute correct or faulty query based on feature flag
+        Contacts c = null;
+        try {
+            boolean faultEnabled = featureFlagService.isEnabled("fault-22-sql-column-missing-error");
+            
+            if (faultEnabled) {
+                LOGGER.info("[TrainTicket][Contacts][F22 ON] Executing FAULTY SQL query with wrong column name");
+                // Execute faulty query - will cause SQL column missing error
+                c = contactsRepository.findByAccountIdAndDocumentTypeAndDocumentType(
+                    addContacts.getAccountId(), addContacts.getDocumentNumber(), addContacts.getDocumentType());
+            } else {
+                LOGGER.info("[TrainTicket][Contacts][F22 OFF] Executing CORRECT SQL query with proper column names");
+                // Execute correct query - will work normally
+                c = contactsRepository.findByAccountIdAndDocumentTypeAndDocumentTypeCorrect(
+                    addContacts.getAccountId(), addContacts.getDocumentNumber(), addContacts.getDocumentType());
+            }
+        } catch (Exception e) {
+            LOGGER.error("[TrainTicket][Contacts][F22] Feature flag check failed: {}", e.getMessage());
+            // Fallback to correct query if feature flag fails
+            try {
+                c = contactsRepository.findByAccountIdAndDocumentTypeAndDocumentTypeCorrect(
+                    addContacts.getAccountId(), addContacts.getDocumentNumber(), addContacts.getDocumentType());
+            } catch (Exception fallbackException) {
+                LOGGER.error("[TrainTicket][Contacts][F22] Fallback query also failed: {}", fallbackException.getMessage());
+            }
+        }
 
         if (c != null) {
             ContactsServiceImpl.LOGGER.warn("[Contacts-Add&Delete-Service.create][AddContacts][Fail.Contacts already exists][contactId: {}]", addContacts.getId());

@@ -570,7 +570,7 @@ spec:
     spec:
       containers:
         - name: ts-contacts-service
-          image: codewisdom/ts-contacts-service:1.0.0
+          image: saad1038/ts-contacts-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP

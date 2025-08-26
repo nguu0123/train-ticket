@@ -1,8 +1,14 @@
-FROM java:8-jre
+FROM openjdk:8-jre-alpine
 
-RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
+# Install timezone data and set Shanghai timezone
+RUN apk add --no-cache tzdata && \
+    cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
+    echo 'Asia/Shanghai' > /etc/timezone
 
-ADD ./target/ts-contacts-service-1.0.jar /app/
-CMD ["java", "-Xmx200m",  "-jar", "/app/ts-contacts-service-1.0.jar"]
+WORKDIR /app
+
+# Copy the JAR file
+COPY target/ts-contacts-service-1.0.jar app.jar
 
 EXPOSE 12347
+ENTRYPOINT ["java", "-jar", "app.jar"]
