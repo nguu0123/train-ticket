@@ -66,7 +66,7 @@ public class ContactsServiceImpl implements ContactsService {
         // FAULT F22: Conditionally execute correct or faulty query based on feature flag
         Contacts c = null;
         try {
-            boolean faultEnabled = featureFlagService.isEnabled("fault-22-sql-column-missing-error");
+            boolean faultEnabled = featureFlagService.isEnabled("fault-22-sql-column-name-mismatch-error");
             
             if (faultEnabled) {
                 LOGGER.info("[TrainTicket][Contacts][F22 ON] Executing FAULTY SQL query with wrong column name");
