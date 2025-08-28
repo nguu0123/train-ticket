@@ -50,7 +50,24 @@ public class ContactsServiceImpl implements ContactsService {
 
     @Override
     public Response createContacts(Contacts contacts, HttpHeaders headers) {
-        Contacts contactsTemp = contactsRepository.findByAccountIdAndDocumentTypeAndDocumentType(contacts.getAccountId(), contacts.getDocumentNumber(), contacts.getDocumentType());
+        // FAULT F22: Conditionally execute correct or faulty query based on feature flag
+        Contacts contactsTemp = null;
+        try {
+            boolean faultEnabled = featureFlagService.isEnabled("fault-22-sql-column-name-mismatch-error");
+            if (faultEnabled) {
+                LOGGER.info("[TrainTicket][Contacts][F22 ON] Executing FAULTY SQL query with wrong column name");
+                contactsTemp = contactsRepository.findByAccountIdAndDocumentTypeAndDocumentType(
+                    contacts.getAccountId(), contacts.getDocumentNumber(), contacts.getDocumentType());
+            } else {
+                LOGGER.info("[TrainTicket][Contacts][F22 OFF] Executing CORRECT SQL query with proper column names");
+                contactsTemp = contactsRepository.findByAccountIdAndDocumentTypeAndDocumentTypeCorrect(
+                    contacts.getAccountId(), contacts.getDocumentNumber(), contacts.getDocumentType());
+            }
+        } catch (Exception e) {
+            LOGGER.error("[TrainTicket][Contacts][F22] Feature flag check failed: {}", e.getMessage());
+            return new Response<>(0, "Contact check failed", null);
+        }
+        
         if (contactsTemp != null) {
             ContactsServiceImpl.LOGGER.warn("[createContacts][Init Contacts, Already Exists][Id: {}]", contacts.getId());
             return new Response<>(0, "Already Exists", contactsTemp);
@@ -81,13 +98,7 @@ public class ContactsServiceImpl implements ContactsService {
             }
         } catch (Exception e) {
             LOGGER.error("[TrainTicket][Contacts][F22] Feature flag check failed: {}", e.getMessage());
-            // Fallback to correct query if feature flag fails
-            try {
-                c = contactsRepository.findByAccountIdAndDocumentTypeAndDocumentTypeCorrect(
-                    addContacts.getAccountId(), addContacts.getDocumentNumber(), addContacts.getDocumentType());
-            } catch (Exception fallbackException) {
-                LOGGER.error("[TrainTicket][Contacts][F22] Fallback query also failed: {}", fallbackException.getMessage());
-            }
+            return new Response<>(0, "Contact check failed", null);
         }
 
         if (c != null) {
