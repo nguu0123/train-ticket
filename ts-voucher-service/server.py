@@ -6,8 +6,10 @@ import os
 import pymysql
 import urllib
 import urllib.request
+from feature_flag_service import FeatureFlagService
 
 mysql_config = {}
+feature_flag_service = FeatureFlagService()
 
 class GetVoucherHandler(tornado.web.RequestHandler):
 
@@ -16,6 +18,21 @@ class GetVoucherHandler(tornado.web.RequestHandler):
         data = json.loads(self.request.body)
         orderId = data["orderId"]
         type = data["type"]
+
+        #################################### Fault Injection Code Start ####################################
+        # F-17: Too many nested selects -> simulate slow DB by sleeping in MySQL
+        try:
+            rf17_flag = feature_flag_service.is_enabled("fault-17-nested-sql-select-clause-error")
+        except Exception as e:
+            rf17_flag = False
+            print(f"[TrainTicket][Voucher][F17] Feature flag check failed: {e}")
+        
+        if rf17_flag:
+            print("[TrainTicket][Voucher][F17 ON] Simulating nested SELECT delay (sleeping in DB)...")
+            self._simulate_nested_select_delay()
+        #################################### Fault Injection Code End ####################################
+
+        
         #Query for the existence of a corresponding credential based on the order id
         queryVoucher = self.fetchVoucherByOrderId(orderId)
 
@@ -42,6 +59,22 @@ class GetVoucherHandler(tornado.web.RequestHandler):
             self.write(self.fetchVoucherByOrderId(orderId))
         else:
             self.write(queryVoucher)
+
+    def _simulate_nested_select_delay(self):
+        try:
+            global mysql_config
+            conn = pymysql.connect(**mysql_config)
+            cur = conn.cursor()
+            # Use built-in MySQL sleep to simulate heavy nested query cost
+            cur.execute("SELECT SLEEP(10);")
+            conn.commit()
+        except Exception as e:
+            print(f"[TrainTicket][Voucher][F17] Error during simulated delay: {e}")
+        finally:
+            try:
+                conn.close()
+            except Exception:
+                pass
 
     def queryOrderByIdAndType(self,orderId,type):
         # Because nacos-sdk-python does not support nacos 2.x yet, we still use environment variables

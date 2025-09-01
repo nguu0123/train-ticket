@@ -1,6 +1,7 @@
 package cancel.service;
 
 import dev.openfeature.sdk.Client;
+import dev.openfeature.sdk.FlagEvaluationDetails;
 import dev.openfeature.sdk.OpenFeatureAPI;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,8 @@ public class FeatureFlagService {
     @PostConstruct
     public void initialize() {
         try {
-            this.client = OpenFeatureAPI.getInstance().getClient();
+            // Get a named client for cancel-service (like Python version uses "voucher-service")
+            this.client = OpenFeatureAPI.getInstance().getClient("cancel-service");
             System.out.println("[TrainTicket][Cancel][FeatureFlagService] Initialized successfully");
         } catch (Exception e) {
             System.err.println("[TrainTicket][Cancel][FeatureFlagService] Failed to initialize: " + e.getMessage());
@@ -25,15 +27,30 @@ public class FeatureFlagService {
     public boolean isEnabled(String flagName) {
         try {
             if (client == null) {
+                System.err.println("[TrainTicket][Cancel][FeatureFlagService] Client not initialized for flag: " + flagName);
                 return false;
             }
             
-            boolean isEnabled = client.getBooleanValue(flagName, false);
-            System.out.println("[TrainTicket][Cancel][FeatureFlagService] Flag '" + flagName + "' status: " + isEnabled);
-            return isEnabled;
+            // Use getBooleanDetails to get detailed information (like Python version)
+            FlagEvaluationDetails<Boolean> details = client.getBooleanDetails(flagName, false);
+            
+            System.out.println(String.format(
+                "[TrainTicket][Cancel][FeatureFlagService] Flag %s: value=%s, reason=%s", 
+                flagName, 
+                details.getValue(), 
+                details.getReason() != null ? details.getReason() : "N/A"
+            ));
+            
+            // Check for ERROR reason like Python version
+            if ("ERROR".equals(details.getReason())) {
+                System.err.println("[TrainTicket][Cancel][FeatureFlagService] Provider error for flag " + flagName);
+                return false;
+            }
+            
+            return Boolean.TRUE.equals(details.getValue());
             
         } catch (Exception e) {
-            System.err.println("[TrainTicket][Cancel][FeatureFlagService] Error checking flag '" + flagName + "': " + e.getMessage());
+            System.err.println("[TrainTicket][Cancel][FeatureFlagService] Error getting flag " + flagName + ": " + e.getMessage());
             return false;
         }
     }

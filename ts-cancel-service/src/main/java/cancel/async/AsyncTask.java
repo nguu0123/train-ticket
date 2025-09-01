@@ -19,7 +19,7 @@ public class AsyncTask {
         
         System.out.println("[TrainTicket][Cancel][AsyncTask] Starting drawback process for order: " + orderId);
         
-        if (featureFlagService.isEnabled("fault-1-async-message-order")) {
+        if (featureFlagService.isEnabled("fault-1-async-message-sequence-control")) {
             System.out.println("[TrainTicket][Cancel][F1 FAULT INJECTED] Adding 8-second delay to payment drawback");
             System.out.println("[TrainTicket][Cancel][F1 FAULT] This will cause async message order violation");
             System.out.println("[TrainTicket][Cancel][F1 FAULT] Order status change may complete before payment drawback");
@@ -47,7 +47,7 @@ public class AsyncTask {
     @Async("mySimpleAsync")
     public Future<Boolean> sendEmail(String email, String orderId) {
         
-        if (featureFlagService.isEnabled("fault-1-async-message-order")) {
+        if (featureFlagService.isEnabled("fault-1-async-message-sequence-control")) {
             System.out.println("[TrainTicket][Cancel][F1 MONITORING] Email notification during F1 fault scenario");
         }
         

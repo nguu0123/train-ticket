@@ -46,7 +46,18 @@ public interface ContactsRepository extends CrudRepository<Contacts, String> {
     @Override
     ArrayList<Contacts> findAll();
 
-    @Query(value="SELECT * FROM contacts WHERE account_id = ?1 AND document_number = ?2 AND document_type = ?3", nativeQuery = true)
+    /**
+     * FAULT F22: SQL Column Missing Fault
+     * Changed 'account_id' to 'accountId' to simulate SQL column missing error
+     */
+    @Query(value="SELECT * FROM contacts WHERE accountId = ?1 AND document_number = ?2 AND document_type = ?3", nativeQuery = true)
     Contacts findByAccountIdAndDocumentTypeAndDocumentType(String account_id, String document_number, int document_type);
+
+    /**
+     * CORRECT query method for when fault is disabled
+     * Uses proper column names for normal operation
+     */
+    @Query(value="SELECT * FROM contacts WHERE account_id = ?1 AND document_number = ?2 AND document_type = ?3", nativeQuery = true)
+    Contacts findByAccountIdAndDocumentTypeAndDocumentTypeCorrect(String account_id, String document_number, int document_type);
 
 }

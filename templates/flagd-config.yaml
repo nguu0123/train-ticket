@@ -12,13 +12,6 @@ data:
           "on": true
           "off": false
         defaultVariant: "off"
-        targeting:
-          if:
-            - var: "enabled"
-            - in:
-              - true
-              - var: "enabled"
-          then: "on"
       
       fault-2-data-request-order-inconsistency:
         state: ENABLED

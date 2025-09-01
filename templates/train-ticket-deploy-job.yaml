@@ -10,8 +10,10 @@ spec:
       containers:
         - name: train-ticket-deploy
           # image: jacksonarthurclark/train-ticket-deploy:latest
-          image: saad1038/train-ticket-deploy:latest
-          imagePullPolicy: IfNotPresent
+          image: saad1038/train-ticket-deploy:0.2.0
+          # TODO: change to IfNotPresent after fault implementations are done
+          # imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NAMESPACE
               value: "{{ .Values.namespace }}"
