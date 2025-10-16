@@ -1,19 +1,28 @@
 #!/bin/bash
+set -e
 
-TT_ROOT=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-
+TT_ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 source "$TT_ROOT/utils.sh"
 
 namespace="$1"
 
-kubectl delete -f deployment/kubernetes-manifests/quickstart-k8s/yamls -n $namespace
+echo "Deleting train-ticket resources in namespace: $namespace"
 
-helm ls -n $namespace | grep ts- | awk '{print $1}' | xargs helm uninstall -n $namespace
+# Delete K8s yamls
+if [ -d "deployment/kubernetes-manifests/quickstart-k8s/yamls" ]; then
+  kubectl delete -f deployment/kubernetes-manifests/quickstart-k8s/yamls -n $namespace --ignore-not-found
+fi
 
-helm uninstall $rabbitmqRelease -n $namespace
-helm uninstall $nacosRelease -n $namespace
-helm uninstall $nacosDBRelease -n $namespace
+# Delete Skywalking (if deployed)
+if [ -d "deployment/kubernetes-manifests/skywalking" ]; then
+  kubectl delete -f deployment/kubernetes-manifests/skywalking -n $namespace --ignore-not-found
+fi
 
+# Uninstall Helm releases
+helm ls -n $namespace | grep '^ts-' | awk '{print $1}' | xargs -r helm uninstall -n $namespace
+helm uninstall rabbitmq -n $namespace || true
+helm uninstall nacos -n $namespace || true
+helm uninstall nacosdb -n $namespace || true
+helm uninstall tsdb -n $namespace || true
 
-kubectl delete -f deployment/kubernetes-manifests/skywalking -n $namespace
-
+echo "Cleanup complete."

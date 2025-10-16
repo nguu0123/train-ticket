@@ -198,7 +198,7 @@ function complete_deployment {
   # kubectl apply -f deployment/kubernetes-manifests/skywalking -n $namespace
 
   echo "Start deploy prometheus and grafana"
-  kubectl apply -f deployment/kubernetes-manifests/prometheus
+  # kubectl apply -f deployment/kubernetes-manifests/prometheus
 
   echo "End deployment Step <3/3>----------------------------------------------------------------------"
 }
@@ -212,4 +212,3 @@ wait_for_pods_ready $namespace
 patch_tt_mysql
 complete_deployment
 wait_for_pods_ready $namespace
-
