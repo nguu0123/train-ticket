@@ -40,19 +40,30 @@ echo "Before deploying Nacos. Current working directory: $(pwd)"
 # Utility function to wait for all pods in a namespace to be ready
 function wait_for_pods_ready {
   local namespace=$1
-  echo "Waiting for all pods in namespace '$namespace' to be ready..."
+  local timeout=300 # 5 minutes (in seconds)
+  local interval=10 # check every 10 seconds
+  local elapsed=0
+
+  echo "Waiting for all pods in namespace '$namespace' to be ready (timeout: 5 minutes)..."
 
   while true; do
     # Check the 'READY' column for pods that are not fully ready
-    non_ready_pods=$(kubectl get pods -n "$namespace" --no-headers | awk '{split($2,a,"/"); if (a[1] != a[2]) print $1}' | wc -l)
+    non_ready_pods=$(kubectl get pods -n "$namespace" --no-headers 2>/dev/null | awk '{split($2,a,"/"); if (a[1] != a[2]) print $1}' | wc -l)
 
     if [ "$non_ready_pods" -eq 0 ]; then
-      echo "All pods in namespace '$namespace' are ready."
-      break
+      echo "✅ All pods in namespace '$namespace' are ready."
+      return 0
     fi
 
-    echo "$non_ready_pods pod(s) are not ready yet. Checking again in 10 seconds..."
-    sleep 10
+    if [ "$elapsed" -ge "$timeout" ]; then
+      echo "⏰ Timeout reached (5 minutes). Some pods are still not ready in namespace '$namespace'."
+      kubectl get pods -n "$namespace"
+      return 1
+    fi
+
+    echo "⏳ $non_ready_pods pod(s) are not ready yet. Checking again in $interval seconds..."
+    sleep "$interval"
+    elapsed=$((elapsed + interval))
   done
 }
 
